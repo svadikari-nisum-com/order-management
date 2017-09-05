@@ -3,7 +3,6 @@
  */
 package com.nisum.ordermanagement.config;
 
-
 import javax.sql.DataSource;
 
 import org.springframework.cloud.Cloud;
@@ -21,17 +20,23 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @Configuration
 public class MongoConfig {
 
-    @Bean
-    public MongoDbFactory mongoDbFactory() {
-        CloudFactory cloudFactory = new CloudFactory();
-        Cloud cloud = cloudFactory.getCloud();
-        MongoServiceInfo serviceInfo = (MongoServiceInfo) cloud.getServiceInfo("my-mongodb");
-        String serviceId = serviceInfo.getId();
-        return (MongoDbFactory) cloud.getServiceConnector(serviceId, DataSource.class, null);
-    }
+	@Bean
+	public MongoDbFactory mongoDbFactory() {
+		MongoDbFactory mongoDb = null;
+		try {
+			CloudFactory cloudFactory = new CloudFactory();
+			Cloud cloud = cloudFactory.getCloud();
+			MongoServiceInfo serviceInfo = (MongoServiceInfo) cloud.getServiceInfo("my-mongodb");
+			String serviceId = serviceInfo.getId();
+			mongoDb = (MongoDbFactory) cloud.getServiceConnector(serviceId, DataSource.class, null);
+		} catch (org.springframework.cloud.CloudException ce) {
+			return mongoDb;
+		}
+		return mongoDb;
+	}
 
-    @Bean
-    public MongoTemplate mongoTemplate() {
-        return new MongoTemplate(mongoDbFactory());
-    }
+	@Bean
+	public MongoTemplate mongoTemplate() {
+		return new MongoTemplate(mongoDbFactory());
+	}
 }
