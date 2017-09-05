@@ -32,7 +32,7 @@ dependencies {
 	compile('org.springframework.cloud:spring-cloud-starter')
 	compile('org.springframework.cloud:spring-cloud-starter-sleuth')
 	compile('io.pivotal.spring.cloud:spring-cloud-services-starter-config-client')
-	/*compile('org.springframework.boot:spring-boot-starter-data-mongodb')*/
+	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.projectlombok:lombok:1.16.10')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
